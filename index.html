@@ -3,139 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Message for Omar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <title>For My Favorite Guy 🌈</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --rainbow: linear-gradient(90deg, #ff0000, #ff8700, #ffd300, #deff0a, #a1ff0a, #0aff99, #0aefff, #147df5, #580aff, #be0aff);
+        }
+
         body {
-            margin: 0;
-            padding: 0;
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: 'VT323', monospace;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: #fff0f3;
-            font-family: 'Quicksand', sans-serif;
+            margin: 0;
             overflow: hidden;
+        }
+
+        /* Rainbow border effect */
+        .card {
+            background: #2a2a2a;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 4px solid transparent;
+            border-image: var(--rainbow) 1;
             text-align: center;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(255, 75, 110, 0.2);
-            z-index: 10;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
             max-width: 400px;
+            position: relative;
         }
 
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            color: #ff4d6d;
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        h1 { font-size: 3.5rem; margin: 0; color: #ffeb3b; }
+        p { font-size: 1.8rem; margin: 15px 0; }
+
+        .btn-container {
+            margin-top: 20px;
+            height: 100px;
+            position: relative;
         }
 
-        p {
-            color: #590d22;
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
+        button {
+            font-family: 'VT323', monospace;
+            padding: 10px 25px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            transition: 0.2s;
         }
 
         #yesBtn {
-            background-color: #ff4d6d;
+            background: var(--rainbow);
             color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.3s;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px black;
         }
 
         #noBtn {
-            background-color: #808080;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            border-radius: 50px;
+            background: #444;
+            color: #888;
             position: absolute;
-            transition: 0.2s ease;
         }
 
+        /* Floating Rainbow Hearts */
         .heart {
             position: absolute;
-            color: #ffb3c1;
-            font-size: 20px;
-            user-select: none;
-            pointer-events: none;
-            animation: fall linear forwards;
+            font-size: 25px;
+            animation: float Up 4s infinite linear;
+            opacity: 0.8;
         }
 
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         .hidden { display: none; }
+
+        #success-msg {
+            font-size: 2.5rem;
+            color: #0aff99;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container" id="mainCard">
-        <h1>Hi Omar...</h1>
-        <p>I’ve been thinking about this for a while, and I wanted to ask you something special...</p>
-        <p><strong>Will you be my Valentine?</strong></p>
-        <div class="buttons">
-            <button id="yesBtn">Yes!</button>
-            <button id="noBtn">No</button>
+    <div class="card" id="quiz">
+        <div style="font-size: 50px;">👑 + 👑</div>
+        <h1>Hey Omar!</h1>
+        <p>Life is better with you by my side. So I have to ask...</p>
+        <p style="color: #ff8700;">Will you be my Valentine?</p>
+        
+        <div class="btn-container">
+            <button id="yesBtn">YES! 🏳️‍🌈</button>
+            <button id="noBtn">Nah</button>
         </div>
     </div>
 
-    <div class="container hidden" id="successCard">
-        <h1>Yay! ❤️</h1>
-        <p>You've made me the happiest person ever, Omar. I can't wait!</p>
+    <div class="card hidden" id="celebration">
+        <h1>HE SAID YES!</h1>
+        <div id="success-msg">You + Me = ❤️</div>
+        <p>I’m the luckiest guy in the world. See you soon, handsome!</p>
+        <div style="font-size: 40px;">👬✨</div>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
-        const mainCard = document.getElementById('mainCard');
-        const successCard = document.getElementById('successCard');
+        const quiz = document.getElementById('quiz');
+        const celebration = document.getElementById('celebration');
 
-        // The "No" button escapes the mouse!
+        // Make the "No" button impossible to catch
         noBtn.addEventListener('mouseover', () => {
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
+            noBtn.style.position = 'fixed';
         });
 
+        // Success Action
         yesBtn.addEventListener('click', () => {
-            mainCard.classList.add('hidden');
-            successCard.classList.remove('hidden');
-            startHearts();
+            quiz.classList.add('hidden');
+            celebration.classList.remove('hidden');
+            setInterval(createRainbowHeart, 150);
         });
 
-        function createHeart() {
+        function createRainbowHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerHTML = '❤️';
+            const hearts = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🌈'];
+            heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
-        }
-
-        function startHearts() {
-            setInterval(createHeart, 300);
+            setTimeout(() => heart.remove(), 4000);
         }
     </script>
 </body>
